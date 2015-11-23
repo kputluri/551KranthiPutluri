@@ -1,0 +1,45 @@
+<table class="table table-striped" name = "p-tb">
+    <div class="input-group">
+        <input class="form-control" ng-model="searchText" placeholder="Search" type="search" ng-change="search()" /> <span class="input-group-addon">
+        <span class="glyphicon glyphicon-search"></span>
+    </span>
+</div>
+<br>
+<a ng-href="#/employee"class="employee">New Employee</a>
+<thead>
+    <tr>
+        <th><a ng-click="orderByField='firstName'; reverseSort = !reverseSort" href="#/employees">First Name<span ng-show="orderByField == 'firstName'"><span ng-show="!reverseSort"> ^</span><span ng-show="reverseSort"> v</span></span></a></th>
+
+        <th><a ng-click="orderByField='lastName'; reverseSort = !reverseSort" href="#/employees">Last Name<span ng-show="orderByField == 'lastName'"><span ng-show="!reverseSort"> ^</span><span ng-show="reverseSort"> v</span></span></a></th>
+
+        <th><a ng-click="orderByField='email'; reverseSort = !reverseSort" href="#/employees">Email<span ng-show="orderByField == 'email'"><span ng-show="!reverseSort"> ^</span><span ng-show="reverseSort"> v</span></span></a></th>
+
+        <th><a ng-click="orderByField='phone'; reverseSort = !reverseSort" href="#/employees">Phone<span ng-show="orderByField == 'phone'"><span ng-show="!reverseSort"> ^</span><span ng-show="reverseSort"> v</span></span></a></th>
+        <th></th>
+    </tr>
+</thead>
+<tbody name="Employeetable">
+    <tr ng-repeat="employee in employees|orderBy:orderByField:reverseSort|filter:searchText|pagination: currentPage * employeesPerPage|limitTo:employeesPerPage">
+        <td>{{employee.firstName}}</td>
+        <td>{{employee.lastName}}</td>
+        <td>{{employee.email}}</td>
+        <td>{{employee.phone}}</td>
+        <td><a ng-href="#/employee/{{employee._id}}">Edit</a></td></tr>
+    </tbody>
+</table>
+    <div class="pagination pagination-centered" ng-show="employees.length">
+<ul class="pagination-controle pagination">
+ <li>
+  <button type="button" class="btn btn-primary" ng-disabled="currentPage == 0"
+ ng-click="currentPage=currentPage-1"> &lt; PREV</button>
+ </li>
+ <li>
+ <span>Page {{currentPage + 1}} of {{ pageCount() }}</span>
+ </li>
+ <li>
+ <button type="button" class="btn btn-primary"
+ ng-disabled="currentPage >= employees.length/employeesPerPage - 1"
+ ng-click="currentPage = currentPage+1">NEXT &gt;</button>
+ </li>
+</ul>
+</div>
